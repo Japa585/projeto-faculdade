@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pagamento - LifeStyle</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background:#f7f7f7; margin:0; padding:20px; }
+    h1 { color:#4f8cff; text-align:center; }
+    form { max-width: 400px; margin: 0 auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    label { display:block; margin-top: 15px; font-weight:bold; }
+    input[type=text], input[type=number], input[type=email] {
+      width: 100%; padding: 10px; margin-top:5px; border: 1px solid #ccc; border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button { margin-top: 20px; width: 100%; padding: 12px; background:#4f8cff; color:#fff; border:none; font-weight:bold; border-radius:5px; cursor:pointer; }
+    button:hover { background:#38e6b0; }
+    #voltar { background:#ccc; color:#333; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Finalizar Pagamento</h1>
+  <div id="resumo-carrinho" style="max-width:400px;margin:0 auto 18px auto;background:#fff;padding:16px 18px 8px 18px;border-radius:8px;box-shadow:0 2px 8px #0001;"></div>
+  <form id="form-pagamento" onsubmit="finalizarCompra(event)">
+    <label for="nome">Nome Completo:</label>
+    <input type="text" id="nome" name="nome" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="cartao">Número do Cartão:</label>
+    <input type="text" id="cartao" name="cartao" maxlength="16" minlength="16" pattern="\d{16}" required>
+    <label for="validade">Validade (MM/AA):</label>
+    <input type="text" id="validade" name="validade" pattern="(0[1-9]|1[0-2])\/\d{2}" placeholder="MM/AA" required>
+    <label for="cvv">CVV:</label>
+    <input type="number" id="cvv" name="cvv" maxlength="3" minlength="3" required>
+    <button type="submit">Pagar Agora</button>
+  </form>
+  <button id="voltar" onclick="voltar()">Voltar ao Carrinho</button>
+  <div id="mensagem-sucesso" style="display:none;background:#d9ff00;color:#222;border-radius:8px;padding:16px;text-align:center;font-weight:bold;margin-top:24px;font-size:1.1em;"></div>
+
+<script>
+  function carregarCarrinho() {
+    const carrinhoStr = localStorage.getItem('carrinho');
+    return carrinhoStr ? JSON.parse(carrinhoStr) : [];
+  }
+
+  // Mapeamento de imagens dos produtos
+  const imagensProdutos = {
+    "Tênis Nike": "imagens/Tênis Nike.jpg",
+    "Camisa de Compressão Preta": "imagens/Camisa compreensão.jpg",
+    "Camiseta Polo Lacoste": "imagens/Camisa Lacoste.jpg",
+    "Mochila Militar": "imagens/Mochila militar.jpg",
+    "Relógio Esportivo": "imagens/Relógio Esportivo.jpg",
+    "Óculos de Sol": "imagens/Óculos de sol.jpg",
+    "Boné Lacoste": "imagens/Boné lacost.webp",
+    "Jaqueta Masculina - Barcelona": "imagens/Jaqueta masculina.jpg",
+    "Calça Cargo - Bege": "imagens/Calça Cargo - Bege.jpg",
+    "Calça Jogger - Preta": "imagens/Calça Jogger - Preta.jpg",
+    "Chinelo Slide": "imagens/Chinelo Slide.jpg"
+  };
+
+  function mostrarResumo() {
+    const carrinho = carregarCarrinho();
+    const div = document.getElementById('resumo-carrinho');
+    if (!div) return;
+    if (!carrinho || carrinho.length === 0) {
+      div.innerHTML = '<div style="color:#888;text-align:center;padding:18px 0 12px 0;font-size:1.1em;">Seu carrinho está vazio.<br>🛒</div>';
+      document.getElementById('form-pagamento').style.display = 'none';
+      return;
+    }
+    let soma = 0;
+    let html = '<ul style="list-style:none;padding:0;margin:0;">';
+    carrinho.forEach(item => {
+      soma += item.preco;
+      const imgSrc = imagensProdutos[item.nome] || 'https://via.placeholder.com/40x40?text=Sem+Imagem';
+      html += `<li style='border-bottom:1px solid #eee;padding:8px 0;display:flex;align-items:center;'><img src="${imgSrc}" alt="${item.nome}" style='width:40px;height:40px;object-fit:cover;border-radius:8px;margin-right:10px;'><div style='flex:1;'><strong>${item.nome}</strong><br><span style='font-size:0.97em;color:#555;'>Tam: ${item.tamanho}</span></div><span style='font-weight:500;'>R$ ${item.preco.toFixed(2)}</span></li>`;
+    });
+    html += '</ul>';
+    html += `<div style='font-weight:bold;font-size:1.1em;margin-top:10px;'>Total: R$ ${soma.toFixed(2)}</div>`;
+    div.innerHTML = html;
+  }
+
+  function finalizarCompra(event) {
+    event.preventDefault();
+    const carrinho = carregarCarrinho();
+    if (!carrinho || carrinho.length === 0) {
+      alert('Seu carrinho está vazio.');
+      window.location.href = 'site.html';
+      return;
+    }
+    document.getElementById('form-pagamento').style.display = 'none';
+    document.getElementById('mensagem-sucesso').style.display = 'block';
+    document.getElementById('mensagem-sucesso').textContent = 'Pagamento realizado com sucesso! Obrigado por comprar na SportWear.';
+    localStorage.removeItem('carrinho');
+    setTimeout(() => { window.location.href = 'site.html'; }, 2500);
+  }
+
+  function voltar() {
+    window.location.href = 'site.html';
+  }
+
+  mostrarResumo();
+</script>
+</body>
+</html>
