@@ -1,1 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SportWear</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="imagens/Logo%20pix.png">
+  <!-- SEO Avançado: Open Graph e Schema.org -->
+  <meta property="og:title" content="SportWear - Sua loja de roupas esportivas" />
+  <meta property="og:description" content="Compre roupas esportivas com promoções, frete grátis e experiência moderna." />
+  <meta property="og:image" content="imagens/Logo%20pix.png" />
+  <meta property="og:url" content="https://sportwear.com" />
+  <meta property="og:type" content="website" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Store",
+    "name": "SportWear",
+    "image": "imagens/Logo%20pix.png",
+    "description": "Loja de roupas esportivas modernas, com promoções, frete grátis e experiência de compra completa.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rua Exemplo, 123",
+      "addressLocality": "Cidade",
+      "addressRegion": "Estado",
+      "addressCountry": "BR"
+    },
+    "url": "https://sportwear.com"
+  }
+  </script>
+  <style>
+    /* Modernização do layout */
+    body {
+      background: linear-gradient(120deg, #f6f6f6 60%, #e9f7ff 100%);
+      color: #222;
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    nav {
+      box-shadow: 0 2px 12px #d9ff0033;
+      background: rgba(255,255,255,0.98) !important;
+      backdrop-filter: blur(2px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 32px;
+      height: 60px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 2001;
+      border-bottom: 1px solid #d9ff00;
+    }
+    .logo {
+      color: #4f8cff;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 8px #4f8cff22;
+      font-size: 2em;
+      font-weight: bold;
+      margin: 24px 0 0 0;
+      text-align: center;
+    }
+    header {
+      margin-top: 80px;
+      margin-bottom: 0;
+      text-align: center;
+    }
+    .banner {
+      margin-top: 0;
+      margin-bottom: 40px;
+      border-radius: 0 0 32px 32px;
+      box-shadow: 0 4px 24px #4f8cff22;
+      font-size: 2rem;
+      font-weight: 700;
+      padding: 40px 0 36px 0;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background: linear-gradient(270deg, #4f8cff, #38e6b0, #ffe066, #4f8cff);
+      background-size: 600% 600%;
+      animation: bannerGradient 8s ease-in-out infinite;
+    }
+    .produtos-titulo {
+      color: #23272f;
+      font-size: 2.1em;
+      text-shadow: 0 2px 8px #4f8cff33;
+      letter-spacing: 1px;
+      margin-top: 60px;
+      margin-bottom: 18px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .produtos-titulo::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      margin: 8px auto 0 auto;
+      border-radius: 2px;
+      background: linear-gradient(90deg,#4f8cff 60%,#38e6b0 100%);
+      animation: linhaTitulo 2.5s infinite alternate;
+    }
+    .produtos-grid {
+      overflow-x: auto;
+      display: flex;
+      gap: 32px;
+      scroll-snap-type: x mandatory;
+    }
+    .produto-card {
+      border: 1.5px solid #e9f7ff;
+      box-shadow: 0 2px 16px #4f8cff11;
+      background: linear-gradient(120deg, #fff 80%, #e9f7ff 100%);
+      border-radius: 18px;
+      padding: 18px 16px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.2s, transform 0.2s, border 0.2s;
+      position: relative;
+      min-height: 420px;
+      scroll-snap-align: start;
+    }
+    .produto-card img {
+      border: 2px solid #e9f7ff;
+      box-shadow: 0 2px 8px #4f8cff22;
+      margin-bottom: 14px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 180px;
+      height: 180px;
+      object-fit: cover;
+      background: #fff;
+    }
+    .produto-card div {
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .produto-card .preco-antigo {
+      color: #aaa;
+      text-decoration: line-through;
+      font-size: 0.98em;
+      margin-right: 8px;
+    }
+    .produto-card .preco {
+      color: #38e6b0;
+      font-size: 1.15em;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    .produto-card .tag-promo {
+      background: linear-gradient(90deg, #ffe066 60%, #4f8cff 100%);
+      color: #222;
+      font-weight: bold;
+      border-radius: 6px;
+      padding: 3px 10px;
+      margin-left: 8px;
+      box-shadow: 0 1px 4px #4f8cff22;
+      font-size: 0.95em;
+    }
+    .produto-card form {
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .produto-card label {
+      font-size: 0.95em;
+      margin-bottom: 2px;
+      color: #4f8cff;
+      font-weight: 500;
+    }
+    .produto-card select, .produto-card input[type="number"] {
+      width: 80px;
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid #4f8cff33;
+      font-size: 1em;
+      margin-bottom: 2px;
+      text-align: center;
+    }
+    .produto-card button {
+      background: linear-gradient(90deg, #ffe066 60%, #4f8cff 100%);
+      color: #222;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 0;
+      margin-top: 8px;
+      box-shadow: 0 2px 8px #4f8cff22;
+      transition: background 0.2s, color 0.2s;
+      width: 100%;
+      font-size: 1.08em;
+      cursor: pointer;
+    }
+    .produto-card button:hover {
+      background: linear-gradient(90deg, #ffd700 60%, #38e6b0 100%);
+      color: #222;
+    }
+    .destaque-produto {
+      box-shadow: 0 4px 32px #4f8cff11;
+      border: 1.5px solid #e9f7ff;
+      background: linear-gradient(120deg, #fff 80%, #e9f7ff 100%);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      max-width: 900px;
+      margin: 40px auto 40px auto;
+      padding: 32px 32px 32px 32px;
+    }
+    .destaque-produto img {
+      border-radius: 18px;
+      width: 260px;
+      height: 260px;
+      object-fit: cover;
+      background: #fff;
+      box-shadow: 0 4px 24px #4f8cff22;
+      border: 2px solid #e9f7ff;
+    }
+    .destaque-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .destaque-info h1 {
+      font-size: 2em;
+      color: #4f8cff;
+      margin: 0 0 8px 0;
+    }
+    .destaque-info .preco-antigo {
+      color: #aaa;
+      text-decoration: line-through;
+      font-size: 1.08em;
+      margin-right: 8px;
+    }
+    .destaque-info .preco {
+      color: #38e6b0;
+      font-size: 1.25em;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    .destaque-info .tag-promo {
+      background: linear-gradient(90deg, #ffe066 60%, #4f8cff 100%);
+      color: #222;
+      font-weight: bold;
+      border-radius: 6px;
+      padding: 3px 10px;
+      margin-left: 8px;
+      box-shadow: 0 1px 4px #4f8cff22;
+      font-size: 0.95em;
+    }
+    .destaque-info form {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+    .destaque-info label {
+      font-size: 1em;
+      color: #4f8cff;
+      font-weight: 500;
+    }
+    .destaque-info select, .destaque-info input[type="number"] {
+      width: 80px;
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid #4f8cff33;
+      font-size: 1em;
+      margin-bottom: 2px;
+      text-align: center;
+    }
+    .destaque-info button {
+      background: linear-gradient(90deg, #ffe066 60%, #4f8cff 100%);
+      color: #222;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 24px;
+      margin-top: 0;
+      box-shadow: 0 2px 8px #4f8cff22;
+      transition: background 0.2s, color 0.2s;
+      font-size: 1.08em;
+      cursor: pointer;
+    }
+    .destaque-info button:hover {
+      background: linear-gradient(90deg, #ffd700 60%, #38e6b0 100%);
+      color: #222;
+    }
+    @media (max-width: 900px) {
+      .destaque-produto {
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 8px 24px 8px;
+        gap: 18px;
+      }
+      .destaque-produto img {
+        width: 180px;
+        height: 180px;
+      }
+      .destaque-info h1 {
+        font-size: 1.3em;
+      }
+    }
+    @media (max-width: 600px) {
+      nav {
+        padding: 0 8px;
+        font-size: 0.95em;
+      }
+      .logo {
+        font-size: 1.2em;
+      }
+      .banner {
+        font-size: 1.1em;
+        padding: 24px 0 18px 0;
+      }
+      .produtos-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 0 4px;
+      }
+      .destaque-produto {
+        padding: 12px 2px 12px 2px;
+        gap: 10px;
+      }
+      .destaque-produto img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+    /* Banner promocional animado */
+    #banner-promo {
+      animation: slideDown 0.8s cubic-bezier(.7,1.6,.5,1) 0s 1;
+      background: linear-gradient(90deg,#ff0000 60%,#4f8cff 100%);
+      box-shadow: 0 4px 24px #4f8cff22;
+      border-radius: 0 0 18px 18px;
+      padding: 0;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .banner-promo-anim {
+      width: 100%;
+      text-align: center;
+      font-size: 1.08em;
+      font-weight: 600;
+      color: #222;
+      letter-spacing: 1px;
+      padding: 8px 0 6px 0;
+      animation: pulsePromo 2.5s infinite;
+      user-select: none;
+    }
+    @keyframes slideDown {
+      from {transform:translateY(-60px);opacity:0;}
+      to {transform:translateY(0);opacity:1;}
+    }
+    @keyframes pulsePromo {
+      0%,100% {filter:brightness(1);}
+      50% {filter:brightness(1.25);}
+    }
+    /* Banner principal com gradiente animado */
+    .banner {
+      /* ...existing code... */
+      background: linear-gradient(270deg, #4f8cff, #38e6b0, #ffe066, #4f8cff);
+      background-size: 600% 600%;
+      animation: bannerGradient 8s ease-in-out infinite;
+      border-radius: 0 0 32px 32px;
+      box-shadow: 0 4px 24px #4f8cff22;
+      margin-bottom: 40px;
+      font-size: 2rem;
+      font-weight: 700;
+      padding: 40px 0 36px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes bannerGradient {
+      0% {background-position:0% 50%}
+      50% {background-position:100% 50%}
+      100% {background-position:0% 50%}
+    }
+    /* Adicione este bloco logo após o <body> OU antes do <header> */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <nav style="position:fixed;top:0;left:0;width:100%;background:#fff;border-bottom:1px solid #d9ff00;z-index:2001;display:flex;justify-content:space-between;align-items:center;padding:0 32px;height:60px;">
+    <span style="font-size:1.5em;font-weight:bold;color:#000000;">SportWear</span>
+    <div>
+      <a href="#produtos" style="margin:0 16px;color:#222;text-decoration:none;font-weight:500;">Produtos</a>
+      <a href="#" onclick="abrirCarrinho();return false;" style="margin:0 16px;color:#222;text-decoration:none;font-weight:500;">Carrinho</a>
+      <a href="#contato" style="margin:0 16px;color:#222;text-decoration:none;font-weight:500;">Contato</a>
+    </div>
+  </nav>
+  <div style="height:60px"></div> <!-- Espaço para não cobrir o topo -->
 
+  <header>
+    <div class="logo">SportWear</div>
+  </header>
+  <div class="banner">
+    Bem vindo à SportWear!<br>
+    <span style="font-size:1rem;font-weight:400;">Aqui você encontra as melhores novidades da moda masculina esportiva!</span>
+  </div>
+
+  <!-- Banner flutuante de brinde -->
+  <div id="banner-brinde" style="display:none;position:fixed;bottom:32px;right:32px;z-index:3001;background:linear-gradient(90deg,#4f8cff,#38e6b0);color:#fff;padding:18px 32px;border-radius:16px;box-shadow:0 4px 24px #4f8cff44;font-size:1.15em;font-weight:600;animation:fadeInUp 1s;">
+    🏆 Ganhe um brinde exclusivo em compras acima de <b>R$350</b>!
+  </div>
+
+  <!-- Produto em destaque -->
+  <section class="destaque-produto">
+    <img src="imagens/Camisa compreensão.jpg" alt="Camisa de Compressão Preta">
+    <div class="destaque-info">
+      <h1>Camisa de Compressão Preta</h1>
+      <span class="preco-antigo">R$ 149,90</span>
+      <span class="preco">R$ 99,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Camisa de Compressão Preta',99.90,document.getElementById('tam-destaque').value,document.getElementById('qtd-destaque').value)">
+        <label for="tam-destaque">Tamanho:</label>
+        <select id="tam-destaque">
+          <option>P</option><option>M</option><option>G</option><option>GG</option>
+        </select>
+        <label for="qtd-destaque">Quantidade:</label>
+        <input type="number" id="qtd-destaque" min="1" value="1">
+        <button type="submit">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="produtos-titulo">Novas coleções</div>
+
+  <!-- Barra de busca e filtro será inserida via JS logo após este título -->
+
+  <div class="produtos-grid">
+    <div class="produto-card">
+      <img src="imagens/Tênis Nike.jpg" alt="Tênis Nike">
+      <div>Tênis Nike</div>
+      <span class="preco-antigo">R$ 249,90</span>
+      <span class="preco">R$ 199,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Tênis Nike',199.90,document.getElementById('tam-tenis-nike').value,document.getElementById('qtd-tenis-nike').value)">
+        <label for="tam-tenis-nike" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-tenis-nike">
+          <option>38</option><option>39</option><option>40</option><option>41</option><option>42</option>
+        </select>
+        <label for="qtd-tenis-nike" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-tenis-nike" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+    <div class="produto-card">
+      <img src="imagens/Camisa Lacoste.jpg" alt="Camiseta Polo Lacoste">
+      <div>Camiseta Polo Lacoste</div>
+      <span class="preco-antigo">R$ 129,90</span>
+      <span class="preco">R$ 89,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Camiseta Polo Lacoste',89.90,document.getElementById('tam-camisa-lacoste').value,document.getElementById('qtd-camisa-lacoste').value)">
+        <label for="tam-camisa-lacoste" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-camisa-lacoste">
+          <option>P</option><option>M</option><option>G</option><option>GG</option>
+        </select>
+        <label for="qtd-camisa-lacoste" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-camisa-lacoste" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+    <div class="produto-card">
+      <img src="imagens/Mochila militar.jpg" alt="Mochila Militar">
+      <div>Mochila Militar</div>
+      <span class="preco-antigo">R$ 189,90</span>
+      <span class="preco">R$ 149,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Mochila Militar',149.90,document.getElementById('tam-mochila').value,document.getElementById('qtd-mochila').value)">
+        <label for="tam-mochila" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-mochila">
+          <option>Único</option>
+        </select>
+        <label for="qtd-mochila" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-mochila" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+    <div class="produto-card">
+      <img src="imagens/Relógio Esportivo.jpg" alt="Relógio Esportivo">
+      <div>Relógio Esportivo</div>
+      <span class="preco-antigo">R$ 349,90</span>
+      <span class="preco">R$ 299,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Relógio Esportivo',299.90,document.getElementById('tam-relogio').value,document.getElementById('qtd-relogio').value)">
+        <label for="tam-relogio" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-relogio">
+          <option>Único</option>
+        </select>
+        <label for="qtd-relogio" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-relogio" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+    <div class="produto-card">
+      <img src="imagens/Óculos de sol.jpg" alt="Óculos de Sol">
+      <div>Óculos de Sol</div>
+      <span class="preco-antigo">R$ 159,90</span>
+      <span class="preco">R$ 119,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Óculos de Sol',119.90,document.getElementById('tam-oculos').value,document.getElementById('qtd-oculos').value)">
+        <label for="tam-oculos" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-oculos">
+          <option>Único</option>
+        </select>
+        <label for="qtd-oculos" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-oculos" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+    <div class="produto-card">
+      <img src="imagens/Boné lacost.webp" alt="Boné Lacoste">
+      <div>Boné Lacoste</div>
+      <span class="preco-antigo">R$ 89,90</span>
+      <span class="preco">R$ 59,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Boné Lacoste',59.90,document.getElementById('tam-bone').value,document.getElementById('qtd-bone').value)">
+        <label for="tam-bone" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-bone">
+          <option>Único</option>
+        </select>
+        <label for="qtd-bone" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-bone" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+    <div class="produto-card">
+      <img src="imagens/Jaqueta masculina.jpg" alt="Jaqueta Masculina - Barcelona">
+      <div>Jaqueta Masculina - Barcelona</div>
+      <span class="preco-antigo">R$ 279,90</span>
+      <span class="preco">R$ 239,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Jaqueta Masculina - Barcelona',239.90,document.getElementById('tam-jaqueta').value,document.getElementById('qtd-jaqueta').value)">
+        <label for="tam-jaqueta" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-jaqueta">
+          <option>P</option><option>M</option><option>G</option><option>GG</option>
+        </select>
+        <label for="qtd-jaqueta" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-jaqueta" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+    <div class="produto-card">
+      <img src="imagens/Calça Cargo - Bege.jpg" alt="Calça Cargo - Bege">
+      <div>Calça Cargo - Bege</div>
+      <span class="preco-antigo">R$ 159,90</span>
+      <span class="preco">R$ 119,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Calça Cargo - Bege',119.90,document.getElementById('tam-cargo').value,document.getElementById('qtd-cargo').value)">
+        <label for="tam-cargo" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-cargo">
+          <option>P</option><option>M</option><option>G</option><option>GG</option>
+        </select>
+        <label for="qtd-cargo" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-cargo" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+    <div class="produto-card">
+      <img src="imagens/Calça Jogger - Preta.jpg" alt="Calça Jogger - Preta">
+      <div>Calça Jogger - Preta</div>
+      <span class="preco-antigo">R$ 169,90</span>
+      <span class="preco">R$ 129,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Calça Jogger - Preta',129.90,document.getElementById('tam-jogger').value,document.getElementById('qtd-jogger').value)">
+        <label for="tam-jogger" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-jogger">
+          <option>P</option><option>M</option><option>G</option><option>GG</option>
+        </select>
+        <label for="qtd-jogger" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-jogger" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+    <div class="produto-card">
+      <img src="imagens/Chinelo Slide.jpg" alt="Chinelo Slide">
+      <div>Chinelo Slide</div>
+      <span class="preco-antigo">R$ 89,90</span>
+      <span class="preco">R$ 69,90</span>
+      <span class="tag-promo">superoferta</span>
+      <form onsubmit="event.preventDefault();adicionarAoCarrinho('Chinelo Slide',69.90,document.getElementById('tam-chinelo').value,document.getElementById('qtd-chinelo').value)">
+        <label for="tam-chinelo" style="font-size:0.95em;">Tamanho:</label>
+        <select id="tam-chinelo">
+          <option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option>
+        </select>
+        <label for="qtd-chinelo" style="font-size:0.95em;">Qtd:</label>
+        <input type="number" id="qtd-chinelo" min="1" value="1" style="width:48px;">
+        <button type="submit" style="margin-top:6px;width:100%;background:#ffe066;color:#222;border:none;border-radius:6px;padding:8px 0;font-weight:bold;cursor:pointer;">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Carrinho lateral, modal de produto, rodapé, botão fixo do carrinho e feedback visual -->
+  <!-- (todo o restante do Projeto.html já está inclusos acima) -->
+  <!-- Certifique-se de copiar também o script JS do Projeto.html para o final do body -->
+  <!-- Carrinho lateral e overlay -->
+<div id="carrinho-overlay" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(30,34,40,0.25);z-index:3000;" onclick="fecharCarrinho()"></div>
+<aside id="carrinho-modal" style="display:none;position:fixed;top:0;right:0;width:350px;max-width:95vw;height:100vh;background:#fff;z-index:3001;box-shadow:-8px 0 32px #4f8cff22;padding:32px 18px 18px 18px;overflow-y:auto;border-radius:18px 0 0 18px;">
+  <h2 style="margin-top:0;margin-bottom:18px;font-size:1.3em;color:#4f8cff;text-align:center;">🛒 Carrinho</h2>
+  <ul id="lista-carrinho" style="list-style:none;padding:0;margin:0 0 18px 0;"></ul>
+  <div id="total-carrinho" style="font-size:1.15em;font-weight:bold;margin:18px 0 8px 0;text-align:right;"></div>
+  <div id="resumo-frete" style="font-size:1em;margin-bottom:18px;text-align:right;"></div>
+  <button onclick="abrirModalPagamento()" style="width:100%;background:#38e6b0;color:#fff;padding:12px 0;border:none;border-radius:6px;font-weight:bold;font-size:1.1em;margin-bottom:10px;cursor:pointer;">Finalizar Compra</button>
+  <!-- O botão "Esvaziar Carrinho" será inserido via JS -->
+  <button onclick="fecharCarrinho()" style="width:100%;background:#fff;color:#4f8cff;padding:10px 0;border:1px solid #4f8cff;border-radius:6px;font-weight:bold;font-size:1.05em;margin-top:10px;cursor:pointer;">Fechar</button>
+</aside>
+
+<!-- Botão fixo do carrinho -->
+<button id="btn-carrinho-fixo" style="position:fixed;bottom:32px;right:32px;z-index:3002;background:#4f8cff;color:#fff;border:none;border-radius:50%;width:60px;height:60px;box-shadow:0 4px 24px #4f8cff44;font-size:2em;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+  🛒
+  <span id="contador-carrinho" style="position:absolute;top:10px;right:10px;background:#ffe066;color:#222;border-radius:50%;padding:2px 8px;font-size:0.9em;font-weight:bold;">0</span>
+</button>
+
+<!-- Feedback visual -->
+<div id="feedback-carrinho" style="display:none;position:fixed;bottom:110px;right:40px;z-index:4000;background:#4f8cff;color:#fff;padding:16px 32px;border-radius:12px;box-shadow:0 4px 24px #4f8cff44;font-size:1.1em;font-weight:600;animation:fadeInUp 0.7s;">
+  Produto adicionado ao carrinho! <span class="check-anim">✔</span>
+</div>
+
+<!-- Modal de pagamento -->
+<div id="modal-pagamento" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.8);z-index:4001;justify-content:center;align-items:center;padding:0 16px;">
+  <div style="background:#fff;border-radius:12px;box-shadow:0 4px 24px #0003;width:100%;max-width:400px;padding:24px;position:relative;">
+    <h2 style="margin:0 0 16px 0;font-size:1.5em;color:#4f8cff;">Pagamento</h2>
+    <div id="pagamento-sucesso" style="display:none;text-align:center;margin-bottom:16px;">
+      <img src="https://img.icons8.com/ios-filled/100/4caf50/checkmark.png" alt="Sucesso" style="margin-bottom:12px;">
+      <h3 style="color:#4caf50;">Pagamento Aprovado!</h3>
+      <p style="color:#555;">Obrigado pela sua compra. Em breve você receberá um e-mail com os detalhes do pedido.</p>
+    </div>
+    <form id="form-pagamento" onsubmit="event.preventDefault();">
+      <div style="margin-bottom:16px;">
+        <label for="nome-cartao" style="font-size:1em;color:#333;">Nome no Cartão:</label>
+        <input type="text" id="nome-cartao" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:1em;margin-top:8px;">
+      </div>
+      <div style="margin-bottom:16px;">
+        <label for="numero-cartao" style="font-size:1em;color:#333;">Número do Cartão:</label>
+        <input type="text" id="numero-cartao" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:1em;margin-top:8px;">
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:16px;">
+        <div style="flex:1;">
+          <label for="validade-cartao" style="font-size:1em;color:#333;">Validade:</label>
+          <input type="text" id="validade-cartao" placeholder="MM/AA" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:1em;margin-top:8px;">
+        </div>
+        <div style="flex:1;">
+          <label for="cvv-cartao" style="font-size:1em;color:#333;">CVV:</label>
+          <input type="text" id="cvv-cartao" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:1em;margin-top:8px;">
+        </div>
+      </div>
+      <button type="submit" style="width:100%;background:#38e6b0;color:#fff;padding:12px 0;border:none;border-radius:6px;font-weight:bold;font-size:1.1em;cursor:pointer;">Pagar Agora</button>
+    </form>
+    <button onclick="fecharModalPagamento()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#333;font-size:1.2em;cursor:pointer;">&times;</button>
+  </div>
+</div>
+
+  <script>
+  // Mapeamento de imagens dos produtos
+  const imagensProdutos = {
+    "Tênis Nike": "imagens/Tênis Nike.jpg",
+    "Camisa de Compressão Preta": "imagens/Camisa compreensão.jpg",
+    "Camiseta Polo Lacoste": "imagens/Camisa Lacoste.jpg",
+    "Mochila Militar": "imagens/Mochila militar.jpg",
+    "Relógio Esportivo": "imagens/Relógio Esportivo.jpg",
+    "Óculos de Sol": "imagens/Óculos de sol.jpg",
+    "Boné Lacoste": "imagens/Boné lacost.webp",
+    "Jaqueta Masculina - Barcelona": "imagens/Jaqueta masculina.jpg",
+    "Calça Cargo - Bege": "imagens/Calça Cargo - Bege.jpg",
+    "Calça Jogger - Preta": "imagens/Calça Jogger - Preta.jpg",
+    "Chinelo Slide": "imagens/Chinelo Slide.jpg"
+  };
+
+  // Carrinho no localStorage
+  function carregarCarrinho() {
+    const carrinhoStr = localStorage.getItem('carrinho');
+    return carrinhoStr ? JSON.parse(carrinhoStr) : [];
+  }
+  function salvarCarrinho(carrinho) {
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+  }
+
+  // Variável global para controlar o último produto selecionado
+  let ultimoProdutoSelecionado = null;
+
+  // Adiciona ao carrinho
+  function adicionarAoCarrinho(nome, preco, tamanho, quantidade) {
+    let carrinho = carregarCarrinho();
+    quantidade = parseInt(quantidade) || 1;
+    for (let i = 0; i < quantidade; i++) {
+      carrinho.push({ nome, preco, tamanho });
+    }
+    salvarCarrinho(carrinho);
+    ultimoProdutoSelecionado = { nome, preco, tamanho };
+    mostrarFeedbackCarrinho();
+    atualizarContadorCarrinho();
+    moverProdutoSelecionadoParaTopo();
+  }
+
+  function moverProdutoSelecionadoParaTopo() {
+    if (!ultimoProdutoSelecionado) return;
+    let carrinho = carregarCarrinho();
+    const selecionados = carrinho.filter(item => item.nome === ultimoProdutoSelecionado.nome && item.tamanho === ultimoProdutoSelecionado.tamanho);
+    carrinho = carrinho.filter(item => !(item.nome === ultimoProdutoSelecionado.nome && item.tamanho === ultimoProdutoSelecionado.tamanho));
+    carrinho = [...selecionados, ...carrinho];
+    salvarCarrinho(carrinho);
+  }
+
+  // Atualiza contador do carrinho fixo
+  function atualizarContadorCarrinho() {
+    const carrinho = carregarCarrinho();
+    let total = carrinho.length;
+    let contador = document.getElementById('contador-carrinho');
+    if (contador) contador.innerText = total;
+  }
+
+  // Carrinho lateral
+  function abrirCarrinho() {
+    atualizarCarrinho();
+    document.getElementById('carrinho-modal').style.display = 'block';
+    document.getElementById('carrinho-overlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.getElementById('carrinho-modal').scrollTop = 0;
+  }
+  function fecharCarrinho() {
+    document.getElementById('carrinho-modal').style.display = 'none';
+    document.getElementById('carrinho-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // Atualiza o carrinho lateral
+  function atualizarCarrinho() {
+    const lista = document.getElementById('lista-carrinho');
+    const total = document.getElementById('total-carrinho');
+    const resumoFrete = document.getElementById('resumo-frete');
+    const carrinho = carregarCarrinho();
+
+    // Agrupa produtos iguais (nome + tamanho)
+    const agrupado = {};
+    carrinho.forEach(item => {
+      const key = item.nome + '|' + item.tamanho;
+      if (!agrupado[key]) agrupado[key] = { ...item, quantidade: 0 };
+      agrupado[key].quantidade++;
+    });
+
+    lista.innerHTML = '';
+    let soma = 0;
+    const itens = Object.values(agrupado);
+    if (itens.length === 0) {
+      lista.innerHTML = '<li style="color:#888;text-align:center;padding:32px 0 24px 0;font-size:1.1em;">Seu carrinho está vazio.<br>🛒</li>';
+      total.textContent = '';
+      resumoFrete.textContent = '';
+      return;
+    }
+    itens.forEach((item, i) => {
+      soma += item.preco * item.quantidade;
+      const li = document.createElement('li');
+      li.style.borderBottom = '1px solid #eee';
+      li.style.padding = '10px 0';
+      li.style.display = 'flex';
+      li.style.alignItems = 'center';
+      li.style.transition = 'background 0.2s';
+      li.onmouseover = () => li.style.background = '#f6f6f6';
+      li.onmouseout = () => li.style.background = '';
+      const imgSrc = imagensProdutos[item.nome] || 'https://via.placeholder.com/48x48?text=Sem+Imagem';
+      li.innerHTML = `
+        <div style="position:relative;">
+          <img src="${imgSrc}" alt="Imagem do produto ${item.nome}" style="width:48px;height:48px;object-fit:cover;border-radius:8px;margin-right:10px;box-shadow:0 1px 4px #0001;cursor:zoom-in;transition:transform 0.2s;" onmouseover="this.style.transform='scale(2)';this.style.zIndex=10;" onmouseout="this.style.transform='scale(1)';this.style.zIndex=1;">
+        </div>
+        <div style="text-align:left;flex:1;">
+          <strong>${item.nome}</strong><br>
+          <span style="font-size:0.97em;color:#555;">Tam: ${item.tamanho}</span><br>
+          <span style="color:#222;font-weight:500;">R$ ${item.preco.toFixed(2)}</span><br>
+          <label for="qtd-carrinho-${i}" style="font-size:0.95em;color:#444;">Qtd:</label>
+          <input id="qtd-carrinho-${i}" type="number" min="1" value="${item.quantidade}" aria-label="Quantidade do produto ${item.nome}" style="width:48px;padding:3px 6px;border-radius:5px;border:1px solid #ccc;margin-top:2px;" onchange="atualizarQuantidadeCarrinhoAgrupado('${item.nome}','${item.tamanho}', this.value)">
+        </div>
+        <button onclick="removerDoCarrinhoAgrupado('${item.nome}','${item.tamanho}')" aria-label="Remover item do carrinho" style="background:none;border:none;color:#c00;cursor:pointer;font-size:1.3em;padding:4px 8px;transition:color 0.2s;" title="Remover"><span aria-hidden="true">&times;</span></button>
+      `;
+      lista.appendChild(li);
+    });
+    total.textContent = `Total: R$ ${soma.toFixed(2)}`;
+    if (soma < 299) {
+      const falta = (299 - soma).toFixed(2).replace('.', ',');
+      resumoFrete.innerHTML = `<span style="color:#e67e22;">Faltam R$ ${falta} para frete grátis!</span>`;
+    } else {
+      resumoFrete.innerHTML = `<span style="color:#38b000;">Você ganhou frete grátis! 🚚</span>`;
+    }
+    // Banner de frete grátis flutuante
+    if (soma >= 299) {
+      mostrarBannerFreteGratis();
+    }
+  }
+
+  // Atualiza quantidade agrupada
+  function atualizarQuantidadeCarrinhoAgrupado(nome, tamanho, novaQtd) {
+    let carrinho = carregarCarrinho();
+    novaQtd = parseInt(novaQtd);
+    if (isNaN(novaQtd) || novaQtd < 1) novaQtd = 1;
+    // Remove todos os itens iguais
+    carrinho = carrinho.filter(item => !(item.nome === nome && item.tamanho === tamanho));
+    // Adiciona nova quantidade
+    const preco = imagensProdutos[nome] ? carrinho.find(item => item.nome === nome && item.tamanho === tamanho)?.preco || 0 : 0;
+    for (let i = 0; i < novaQtd; i++) {
+      carrinho.push({ nome, preco, tamanho });
+    }
+    salvarCarrinho(carrinho);
+    atualizarCarrinho();
+    atualizarContadorCarrinho();
+    mostrarFeedbackCarrinho('Quantidade atualizada!');
+  }
+
+  // Remove item agrupado
+  function removerDoCarrinhoAgrupado(nome, tamanho) {
+    let carrinho = carregarCarrinho();
+    carrinho = carrinho.filter(item => !(item.nome === nome && item.tamanho === tamanho));
+    salvarCarrinho(carrinho);
+    atualizarCarrinho();
+    atualizarContadorCarrinho();
+  }
+
+  // Finalizar compra (simples)
+  function finalizarCompra() {
+    const carrinho = carregarCarrinho();
+    if (!carrinho || carrinho.length === 0) {
+      mostrarFeedbackCarrinho('Seu carrinho está vazio!');
+      fecharCarrinho();
+      return;
+    }
+    mostrarFeedbackCarrinho('Compra finalizada!');
+    localStorage.removeItem('carrinho');
+    atualizarCarrinho();
+    atualizarContadorCarrinho();
+    fecharCarrinho();
+  }
+
+  // Feedback visual
+  function mostrarFeedbackCarrinho(msg) {
+    const f = document.getElementById('feedback-carrinho');
+    f.innerHTML = msg || 'Produto adicionado ao carrinho! <span class="check-anim">✔</span>';
+    f.style.display = 'block';
+    setTimeout(() => { f.style.display = 'none'; }, 1500);
+  }
+
+  // Banner de frete grátis flutuante
+  function mostrarBannerFreteGratis() {
+    const banner = document.getElementById('banner-brinde');
+    if (banner) banner.style.display = 'block';
+  }
+
+  // Atualiza contador ao carregar
+  atualizarContadorCarrinho();
+
+  // Botão fixo do carrinho
+  document.getElementById('btn-carrinho-fixo').onclick = abrirCarrinho;
+
+  // Botão "Esvaziar Carrinho"
+  if (!document.getElementById('btn-esvaziar-carrinho')) {
+    document.getElementById('carrinho-modal').insertAdjacentHTML('beforeend', `
+      <button id="btn-esvaziar-carrinho" style="width:100%;background:#fff;color:#c00;padding:10px 0;border:1px solid #c00;border-radius:6px;font-weight:bold;font-size:1.05em;margin-top:10px;cursor:pointer;transition:background 0.2s;">Esvaziar Carrinho</button>
+    `);
+    document.getElementById('btn-esvaziar-carrinho').onclick = function() {
+      localStorage.removeItem('carrinho');
+      atualizarCarrinho();
+      atualizarContadorCarrinho();
+      mostrarFeedbackCarrinho('Carrinho esvaziado!');
+    };
+  }
+
+  // Substitua o onclick do botão "Finalizar Compra" no carrinho-modal por:
+  document.querySelector('button[onclick="finalizarCompra()"]').setAttribute('onclick', 'abrirModalPagamento()');
+
+  // Função para abrir o modal de pagamento
+  function abrirModalPagamento() {
+    document.getElementById('modal-pagamento').style.display = 'flex';
+    document.getElementById('pagamento-sucesso').style.display = 'none';
+    document.getElementById('form-pagamento').style.display = 'flex';
+  }
+
+  // Fechar modal
+  function fecharModalPagamento() {
+    document.getElementById('modal-pagamento').style.display = 'none';
+  }
+
+  // Lógica do pagamento simulado
+  document.getElementById('form-pagamento').onsubmit = function(e) {
+    e.preventDefault();
+    // Simula processamento
+    document.getElementById('form-pagamento').style.display = 'none';
+    document.getElementById('pagamento-sucesso').style.display = 'block';
+    // Limpa carrinho após 2s
+    setTimeout(() => {
+      fecharModalPagamento();
+      localStorage.removeItem('carrinho');
+      atualizarCarrinho();
+      atualizarContadorCarrinho();
+      mostrarFeedbackCarrinho('Compra finalizada e pagamento aprovado!');
+    }, 2000);
+  };
+  </script>
+</body>
+</html>
